@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class OpinionConfig(AppConfig):
+class UserConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'opinion'
+    name = 'apps.user'
