@@ -1,3 +1,36 @@
 from django.db import models
+from apps.user.models import User
 
 # Create your models here.
+class QRCategory(models.Model):
+
+    class RecordCategory(models.TextChoices):
+
+        FOOD = "FOOD", "Food"
+        UBICATION = "UBICATION", "Ubicaction" 
+
+    recodr_category = models.CharField(
+        max_length=100, choices=RecordCategory.choices)
+    
+    class Meta:
+        verbose_name = 'QRCategory'
+        verbose_name_plural = 'QRCategories'
+
+    def __str__(self):
+        return f"{self.category_recodr}"
+
+
+
+class QRrecord(models.Model):
+    name = models.CharField(max_length=255)
+    value = models.TextField()
+    is_active = models.BooleanField(default=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    qr_category = models.ForeignKey(QRCategory, on_delete=models.CASCADE, null=False)
+
+    class Meta:
+        verbose_name = 'QRrecord'
+        verbose_name_plural = 'QRrecords'
+
+    def __str__(self):
+        return f"{self.qr_category} {self.name} "
