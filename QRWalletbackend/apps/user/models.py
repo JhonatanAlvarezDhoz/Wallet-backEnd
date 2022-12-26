@@ -14,4 +14,4 @@ class User(AbstractUser):
         verbose_name_plural = 'users'
 
         def __str__(self):
-            return f"{self.username} {self.email} {self.email}"
+            return f"{self.username} {self.email}"
