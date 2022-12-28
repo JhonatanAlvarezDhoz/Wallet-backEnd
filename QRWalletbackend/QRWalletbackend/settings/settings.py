@@ -47,6 +47,9 @@ LOCAL_APPS = [
 THIRD_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    "rest_framework_api_key",
+    "django_phonenumbers",
+    "corsheaders",
 ]
 
 INSTALLED_APPS = [

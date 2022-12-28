@@ -11,6 +11,9 @@ class QRCategory(models.Model):
         verbose_name = 'QRCategory'
         verbose_name_plural = 'QRCategories'
 
+    def create_ctaegory_for_default(self):
+        QRCategory.objects.create()
+
     def __str__(self):
         return f"{self.name}"
 
