@@ -42,15 +42,18 @@ LOCAL_APPS = [
     'apps.opinion',
     'apps.QRrecord',
     'apps.user',
+    'apps.utils',
 ]
 
 THIRD_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_rest_passwordreset',
     "rest_framework_api_key",
     "django_phonenumbers",
     "corsheaders",
 ]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -174,8 +177,8 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 MATERIAL_ADMIN_SITE = {
-    'HEADER':  'SOL Latino Admin',
-    'TITLE':  'SOL Latino Admin',
+    'HEADER':  'QR Wallet Admin',
+    'TITLE':  'QR Wallet Admin',
     'PROFILE_PICTURE':  'sol_logo.png',
     'LOGIN_LOGO':  'sol_logo.png',
     'SHOW_THEMES':  True,
@@ -183,3 +186,14 @@ MATERIAL_ADMIN_SITE = {
     'NAVBAR_REVERSE': True,
     'SHOW_COUNTS': True,
 }
+
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomNumberTokenGenerator",
+    "OPTIONS": {
+        "min_number": 1500,
+        "max_number": 9999
+    }
+}
+
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.25

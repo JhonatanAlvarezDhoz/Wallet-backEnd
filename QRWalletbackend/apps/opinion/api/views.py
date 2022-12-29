@@ -4,6 +4,7 @@ from apps.opinion.api.serializers import OpinionSerializers, CreateOpinionSerial
 from rest_framework_api_key.permissions import HasAPIKey
 
 
+#---------------  Views Opinion  ---------------
 class ListOpinionAPIView(generics.ListAPIView):
     queryset = Opinion.objects.filter(is_active=True)
     serializer_class = OpinionSerializers
@@ -22,7 +23,7 @@ class UpdateOpinionAPIView(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.name = request.data.get("name")
+        instance.id = request.data.get("id")
         instance.save()
 
         serializer = self.get_serializer(instance)

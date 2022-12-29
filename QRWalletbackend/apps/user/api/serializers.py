@@ -8,17 +8,20 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'is_subscribe', 'is_free',)
 
+class CreateUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email', 'phone', 'is_subscribe', 'is_free',)
+
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
-        user.set_password(validated_data["password"])
         user.save()
 
         QRCategory.objects.create(name='Food', user_id=user)
         QRCategory.objects.create(name='Ubication', user_id=user)
 
         return user
-
-        
 
 class UserDetailsSerializer(serializers.ModelSerializer):
 
@@ -34,4 +37,13 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             "subscribe_date",
             "first_name",
             "is_free",
+        )
+
+class UpdateUserSubscriberSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+
+        fields = (
+            "subscribe_date"
         )

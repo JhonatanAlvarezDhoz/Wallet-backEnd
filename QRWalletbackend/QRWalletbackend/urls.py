@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('apps.opinion.api.urls'))
+    path('api/opinion/', include('apps.opinion.api.urls')),
+    path('api/qr/', include('apps.QRrecord.api.urls')),
+    path('api/user/', include('apps.user.api.urls')),
 ]
