@@ -12,6 +12,15 @@ class ListOpinionAPIView(generics.ListAPIView):
     serializer_class = OpinionSerializers
     permission_classes = [HasAPIKey, IsAuthenticated]
 
+class UserOpinions(generics.ListAPIView):
+    serializer_class = OpinionSerializers
+    permission_classes = [HasAPIKey, IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Opinion.objects.filter(user=user)
+        return queryset
+
 
 class CreateOpinionAPIView(generics.CreateAPIView):
     serializer_class = CreateOpinionSerializers
@@ -51,14 +60,7 @@ class UpdateOpinionAPIView(generics.UpdateAPIView):
 
         return Response(serializer.data)
 
-class DeleteOpinionAPIView(generics.ListAPIView):
+class DeleteOpinionAPIView(generics.DestroyAPIView):
     queryset = Opinion.objects.filter()
     serializer_class = DeleteOpinionSerializers
     permission_classes = [HasAPIKey]
-
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.delete()
-        return null

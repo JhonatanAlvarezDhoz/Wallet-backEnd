@@ -7,6 +7,6 @@ from django.contrib.admin import ModelAdmin, register
 
 @register(User)
 class UserAdmin(ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'email', 'phone', 'is_subscribe', 'is_free',)
+    list_display = ('id', 'username', 'first_name', 'last_name', 'email', 'phone', 'is_subscribe', 'is_free',)
     search_fields = ('username', 'email', 'is_subscribe', 'is_free',)
     readonly_fields = ("password",)

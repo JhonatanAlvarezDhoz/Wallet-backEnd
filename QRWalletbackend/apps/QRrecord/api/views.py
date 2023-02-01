@@ -8,9 +8,15 @@ from rest_framework.response import Response
 
 #---------------  Views QRCategory  ---------------
 class ListQRCategoryAPIView(generics.ListAPIView):
-    queryset = QRCategory.objects.filter(is_active=True)
     serializer_class = QRCategorySerializers
     permission_classes = [HasAPIKey, IsAuthenticated]
+
+    def get_queryset(self):
+
+        category_user = self.request.user
+        queryset = QRCategory.objects.filter(user_id=category_user)
+        return queryset.order_by('-id')
+    
 
 class CreateQRCategoryAPIView(generics.CreateAPIView):
     serializer_class = CreateQRCategorySerializers
@@ -32,24 +38,30 @@ class UpdateQRCategoryAPIView(generics.UpdateAPIView):
 
         return Response(serializer.data)
 
-class DeleteQRCategoryAPIView(generics.ListAPIView):
+class DeleteQRCategoryAPIView(generics.DestroyAPIView):
     queryset = QRCategory.objects.filter(is_active=True)
     serializer_class = DeleteQRCategorySerilizers
     permission_classes = [HasAPIKey, IsAuthenticated]
 
 
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.delete()
-        return null
+    # def delete(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.id = request.data.get("id")
+    #     instance.delete()
+    #     return super().delete(request, *args, **kwargs)
 
 
 #---------------  Views QRrecod  ---------------
 class ListQRrecordAPIView(generics.ListAPIView):
-    queryset = QRrecord.objects.filter(is_active=True)
     serializer_class = QRrecordSerializers
     permission_classes = [HasAPIKey, IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user)
+        categories = QRCategory.objects.filter(user_id=user)
+        queryset = QRrecord.objects.filter(qr_category__in=categories)
+        return queryset
 
 class CreateQRrecordAPIView(generics.CreateAPIView):
 
@@ -59,11 +71,14 @@ class CreateQRrecordAPIView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        if(not "qr_category_id" in data):
-            raise Exception("qr_category_id is required")
+        if(not "qr_category" in data): 
+            raise Exception("qr_category is required")
         
-        qr_category_id = data["qr_category_id"]
-        qr_category = QRCategory.objects.get(id=qr_category_id, user_id=self.request.user)
+        qr_category_id = data["qr_category"]
+
+        qr_category = QRCategory.objects.get(pk=qr_category_id)
+        data.pop("qr_category")
+
         try:
             QRrecord.objects.create(**data, qr_category=qr_category)
             return Response({"status_code": "OK"}, status=status.HTTP_201_CREATED)
@@ -90,14 +105,14 @@ class UpdateQRrecordAPIView(generics.UpdateAPIView):
 
         return Response(serializer.data)
 
-class DeleteQRrecordAPIView(generics.ListAPIView):
+class DeleteQRrecordAPIView(generics.DestroyAPIView):
     queryset = QRrecord.objects.filter(is_active=True)
     serializer_class = DeleteQRrecordSerializer
     permission_classes = [HasAPIKey, IsAuthenticated]
 
 
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.delete()
-        return null
+    # def delete(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.id = request.data.get("id")
+    #     instance.delete()
+    #     return super().delete(request, *args, **kwargs)
