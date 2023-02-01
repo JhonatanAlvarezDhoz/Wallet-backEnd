@@ -68,7 +68,7 @@ class CreateQRrecordAPIView(generics.CreateAPIView):
             QRrecord.objects.create(**data, qr_category=qr_category)
             return Response({"status_code": "OK"}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            print(e)
+            raise e
 
         
 

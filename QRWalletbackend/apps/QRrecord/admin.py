@@ -18,5 +18,5 @@ class QRrecordAdmin(ModelAdmin):
 
 @register(QRCategory)
 class QRCategoyAdmin(ModelAdmin):
-    list_display = ('name', 'user_id',)
+    list_display = ('name', 'user_id', 'is_active',)
     search_fields = ('name', 'user_id',)

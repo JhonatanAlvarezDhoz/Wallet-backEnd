@@ -9,3 +9,4 @@ from django.contrib.admin import ModelAdmin, register
 class UserAdmin(ModelAdmin):
     list_display = ('username', 'first_name', 'last_name', 'email', 'phone', 'is_subscribe', 'is_free',)
     search_fields = ('username', 'email', 'is_subscribe', 'is_free',)
+    readonly_fields = ("password",)

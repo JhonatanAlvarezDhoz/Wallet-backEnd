@@ -6,7 +6,7 @@ from django.contrib.admin import ModelAdmin, register
 
 @register(Category)
 class OpinionCategoryAdmin(ModelAdmin):
-    list_display = ('name_category',)
+    list_display = ('id', 'name_category',)
 
 
 @register(Opinion)
