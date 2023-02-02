@@ -27,16 +27,16 @@ class UpdateQRCategoryAPIView(generics.UpdateAPIView):
     serializer_class = QRCategorySerializers
     permission_classes = [HasAPIKey, IsAuthenticated]
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.save()
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.id = request.data.get("id")
+    #     instance.save()
 
-        serializer = self.get_serializer(instance)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+    #     serializer = self.get_serializer(instance)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
 
-        return Response(serializer.data)
+    #     return Response(serializer.data)
 
 class DeleteQRCategoryAPIView(generics.DestroyAPIView):
     queryset = QRCategory.objects.filter(is_active=True)
@@ -94,16 +94,16 @@ class UpdateQRrecordAPIView(generics.UpdateAPIView):
     serializer_class = UpdateQRrecordSerializer
     permission_classes = [HasAPIKey, IsAuthenticated]
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.save()
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.id = request.data.get("id")
+    #     instance.save()
 
-        serializer = self.get_serializer(instance)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+    #     serializer = self.get_serializer(instance)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
 
-        return Response(serializer.data)
+    #     return Response(serializer.data)
 
 class DeleteQRrecordAPIView(generics.DestroyAPIView):
     queryset = QRrecord.objects.filter(is_active=True)

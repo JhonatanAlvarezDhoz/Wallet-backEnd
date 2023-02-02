@@ -1,6 +1,13 @@
 from rest_framework import serializers
-from apps.opinion.models import Opinion
+from apps.opinion.models import Opinion, Category
 
+
+#---------------  Serializers Category Opinion   ---------------
+
+class ListCategoryOpinionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['name']
 
 
 #---------------  Serializers Opinion   ---------------
@@ -23,5 +30,7 @@ class DeleteOpinionSerializers(serializers.ModelSerializer):
     class Meta:
         model = Opinion
         fields = ['id']
+
+
 
 

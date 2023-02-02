@@ -1,9 +1,17 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from apps.opinion.models import Opinion, Category
-from apps.opinion.api.serializers import OpinionSerializers, CreateOpinionSerializers, UpdateOpinionSerializers, DeleteOpinionSerializers
+from apps.opinion.api.serializers import OpinionSerializers, CreateOpinionSerializers, UpdateOpinionSerializers, DeleteOpinionSerializers, ListCategoryOpinionSerializers
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import IsAuthenticated
+
+
+#---------------  Views Category Opinion  ---------------
+
+class ListCategoryOpinion(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = ListCategoryOpinionSerializers
+    permission_classes = [HasAPIKey, IsAuthenticated]
 
 
 #---------------  Views Opinion  ---------------
@@ -49,16 +57,16 @@ class UpdateOpinionAPIView(generics.UpdateAPIView):
     serializer_class = UpdateOpinionSerializers
     permission_classes = [HasAPIKey]
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.id = request.data.get("id")
-        instance.save()
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.id = request.data.get("id")
+    #     instance.save()
 
-        serializer = self.get_serializer(instance)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+    #     serializer = self.get_serializer(instance)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
 
-        return Response(serializer.data)
+    #     return Response(serializer.data)
 
 class DeleteOpinionAPIView(generics.DestroyAPIView):
     queryset = Opinion.objects.filter()
